@@ -1,0 +1,10 @@
+{
+  "platform": "ex-minimal-adapter-py",
+  "engineVersion": "0.0.0",
+  "files": [
+    {
+      "path": ".ex-minimal-adapter-py/prompts/example-rule.md",
+      "kind": "text"
+    }
+  ]
+}
