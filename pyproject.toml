@@ -1,0 +1,10 @@
+# 提示詞源碼樹不是要發布的套件：package = false 讓 uv 以虛擬專案管理依賴，
+# 不要求 build-system、不打包本目錄。
+[project]
+name = "ex-minimal-project-py"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = ["promptex-py~=0.0.0"]
+
+[tool.uv]
+package = false
