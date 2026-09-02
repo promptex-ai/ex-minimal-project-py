@@ -12,7 +12,7 @@ promptex 的最小 Python 消費端專案，同時是 [promptex-resources-py](ht
 | `plugins/ex-minimal-plugin-py/` | plugin 擴展，在改寫遍為每個 skill 與 rule 追加一行 |
 | `adapters/ex-minimal-adapter-py/` | 第三方平台適配擴展，把同一份源碼投影成另一套平台原生產物 |
 
-兩份擴展是本專案的一部分而非獨立套件：它們不自成工作區、不帶各自的消費專案、名稱也不加 registry 搜尋用的 `promptex-plugin-`／`promptex-adapter-` 前綴。`pyproject.toml` 以 `[tool.uv.sources]` 的 editable path 掛上兩份擴展：Python 的 import 走發布名對應的 import 套件名，帶連字號的目錄無法直接 import，擴展因此仍是一份可安裝的發布單元，只是來源指向本專案目錄內。
+兩份擴展是本專案的一部分：它們不自成工作區、不帶各自的消費專案、名稱也不加 registry 搜尋用的 `promptex-plugin-`／`promptex-adapter-` 前綴（改以 keywords 承載可搜尋性）。兩者同時保持可發布形態，中繼欄位與版號比照 promptex 的 alpha 原型套件，發布指令見各自的 README。`pyproject.toml` 以 `[tool.uv.sources]` 的 editable path 掛上兩份擴展：Python 的 import 走發布名對應的 import 套件名，帶連字號的目錄無法直接 import，擴展因此仍是一份可安裝的發布單元，只是來源指向本專案目錄內。
 
 ## 建置與產物
 

@@ -1,6 +1,6 @@
 # ex-minimal-adapter-py
 
-[ex-minimal-project-py](../../) 的第三方平台適配擴展，不是獨立套件。由專案以路徑來源（`[tool.uv.sources]` 的 editable path）掛上：Python 的 import 走發布名對應的 import 套件名，擴展因此仍是一份可安裝的發布單元，只是來源指向專案目錄內。
+[ex-minimal-project-py](../../) 的 adapter 擴展。由專案以路徑來源（`[tool.uv.sources]` 的 editable path）掛上：Python 的 import 走發布名對應的 import 套件名，帶連字號的目錄無法直接 import；同時保持可發布形態——中繼欄位、參數宣告與授權都隨套件出貨，版號比照 promptex 的 alpha 原型套件。
 
 適配以 SDK 層實作，只用 `AdapterContext` 的公開介面。`emit` 的責任鏈固定四步：
 
@@ -18,3 +18,17 @@
 ## 參數宣告
 
 參數宣告（標準 JSON Schema）住import 套件目錄裡的 `promptex.config.schema.json`，由 `__init__.py` 自己讀進來，隨中介表示交給讀取端；`promptex config declare ex-minimal-adapter-py` 讀的是同一份檔案。
+
+## 發布
+
+```bash
+uv build
+uvx twine check dist/*
+uv publish
+```
+
+版號寫 PEP 440 的 `0.0.1a1`，與另兩個生態的 `0.0.1-alpha.1` 指同一個版本——三生態版號無法逐字相同，這是預發布版號的既有限制。安裝端要 `pip install --pre ex-minimal-plugin-py`：預發布版號不會被 pip 預設選中。
+
+發布前先把 SDK 依賴換掉：`dependencies` 的 `promptex-py~=0.0.0` 指的是開發中的本地 SDK，registry 上目前只有 alpha 原型（只有 `defineSkill` 與 `build` 那一條最窄路徑），不含本擴展用到的 plugin 與適配介面。照現況發布出去，安裝端裝得下來卻編不動。
+
+名稱刻意不帶 `promptex-adapter-` 前綴——那是給要被消費端搜尋到的套件用的；本擴展的定位是示範，改以 keywords 的 `promptex-adapter` 承載可搜尋性。

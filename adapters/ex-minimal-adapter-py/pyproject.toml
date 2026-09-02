@@ -1,13 +1,43 @@
 [project]
 name = "ex-minimal-adapter-py"
-version = "0.1.0"
-description = "A third-party promptex platform adapter."
+# PEP 440 的正規化形態：npm 與 crates.io 側的同一份擴展寫的是 semver 的
+# `0.0.1-alpha.1`，PyPI 會把它正規化成 `0.0.1a1`，兩者指同一個版本。三生態
+# 版號無法逐字相同，這是預發布版號的既有限制。
+version = "0.0.1a1"
+description = "promptex 第三方平台適配擴展範例（alpha）：把同一份源碼投影成另一套平台原生產物"
 requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+readme = "README.md"
+authors = [{ name = "promptex-ai" }]
+keywords = ["promptex", "promptex-adapter", "prompt", "ai", "llm", "agent", "codegen"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Software Development :: Build Tools",
+  "Topic :: Software Development :: Code Generators",
+]
 dependencies = ["promptex-py~=0.0.0"]
 
+[project.urls]
+Homepage = "https://github.com/promptex-ai/ex-minimal-project-py"
+Repository = "https://github.com/promptex-ai/ex-minimal-project-py"
+Issues = "https://github.com/promptex-ai/ex-minimal-project-py/issues"
+
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling>=1.25"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/ex_minimal_adapter_py"]
+
+[tool.hatch.build]
+# 開發樹本身就是 python-source，直譯器跑過留下的 __pycache__ 會被收進 wheel。
+# 那些 .pyc 綁死在建置機的 Python 版本上，對安裝端無用，卻讓 wheel 的內容
+# 清單隨「誰在哪台機器上建的」而變。
+exclude = ["**/__pycache__/**"]
