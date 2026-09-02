@@ -14,7 +14,7 @@ import json
 from pathlib import Path
 from typing import Optional
 
-from promptex import AdapterContext, DegradeItem, define_target
+from promptex import AdapterContext, DegradeItem, EmitFiles, define_target
 
 # 參數宣告（標準 JSON Schema）：由本套件自己讀進來、隨中介表示交給讀取端；
 # `promptex config declare` 讀的是套件目錄裡的同一份檔案。
@@ -47,8 +47,10 @@ def target(root: Optional[str] = None) -> dict:
         body = "\n".join(f"{k}: {v}" for k, v in overrides.items())
         return f"---\n{body}\n---\n\n"
 
-    def _emit(ctx: AdapterContext) -> dict[str, str]:
-        files: dict[str, str] = {}
+    def _emit(ctx: AdapterContext) -> EmitFiles:
+        # 型別標成 SDK 的 EmitFiles（值可為 str 或 bytes）而非 dict[str, str]：dict 的
+        # 值型別不變（invariant），窄一格就指派不進 AdapterEmit。
+        files: EmitFiles = {}
 
         # ① 先算落點表：渲染需要它解析引用，故必須在渲染之前完成。
         layout: dict[str, str] = {}

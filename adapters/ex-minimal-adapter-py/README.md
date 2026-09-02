@@ -24,10 +24,10 @@
 ```bash
 uv build
 uvx twine check dist/*
-uv publish
+uvx twine upload dist/*
 ```
 
-版號寫 PEP 440 的 `0.0.1a1`，與另兩個生態的 `0.0.1-alpha.1` 指同一個版本——三生態版號無法逐字相同，這是預發布版號的既有限制。安裝端要 `pip install --pre ex-minimal-plugin-py`：預發布版號不會被 pip 預設選中。
+版號寫 PEP 440 的 `0.0.1a1`，與另兩個生態的 `0.0.1-alpha.1` 指同一個版本——三生態版號無法逐字相同，這是預發布版號的既有限制。安裝端要**明指版本**：`pip install ex-minimal-adapter-py==0.0.1a1`（或 `uv pip install` 同樣寫法），**不要**用全域的 `--pre`／`--prerelease=allow`。理由：`--pre` 對整棵依賴樹放行預發布版，`promptex-py~=0.0.0` 會因此解到比介面樁 `0.0.0` 更高的舊原型 `0.0.1a1`（只有 `define_skill`），import 時找不到 `AdapterContext`／`define_target`；明指擴展版本時 pip 與 uv 只對該套件放行預發布，依賴仍照預設排除預發布、解到樁。
 
 SDK 依賴不必換：`dependencies` 的 `promptex-py~=0.0.0` 在 registry 上對到的是 promptex-prototype 發的 `0.0.0` **介面樁**——型別與簽名逐字複製正式版、方法本體一律拋錯。發布驗證（尤其 `cargo publish` 的建置）拿它編得過；裝到消費端也裝得起來，但實際執行要靠工作區覆寫指向本地的正式版 SDK，否則第一個碰到樁的呼叫就會以「promptex 介面樁」開頭的錯誤中止。
 
