@@ -55,7 +55,7 @@ def create_plugin(banner: Optional[str] = None) -> Plugin:
         # 宣告本擴充作用在哪幾種節點類型（供文件與讀取端），不隱含過濾。
         kinds=["skill", "rule"],
         # 相容的框架版本範圍：安裝的 promptex-py 落在範圍外時於編譯開始前報錯。
-        version="^0.0.0",
+        version="^1.0.0",
         config_schema=_SCHEMA,
         prepare=_prepare,
         validate=_validate,
