@@ -2,7 +2,7 @@
 # 不要求 build-system、不打包本目錄。
 [project]
 name = "ex-minimal-project-py"
-version = "0.1.0"
+version = "1.0.0"
 requires-python = ">=3.10"
 dependencies = [
   "promptex-py~=1.0.1",
