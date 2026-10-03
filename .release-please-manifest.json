@@ -1,4 +1,4 @@
 {
-  "plugins/ex-minimal-plugin-py": "0.0.1-alpha.1",
-  "adapters/ex-minimal-adapter-py": "0.0.1-alpha.1"
+  "plugins/ex-minimal-plugin-py": "1.0.0",
+  "adapters/ex-minimal-adapter-py": "1.0.0"
 }
