@@ -1,17 +1,15 @@
 [project]
 name = "ex-minimal-plugin-py"
-# PEP 440 的正規化形態：npm 與 crates.io 側的同一份擴展寫的是 semver 的
-# `0.0.1-alpha.1`，PyPI 會把它正規化成 `0.0.1a1`，兩者指同一個版本。三生態
-# 版號無法逐字相同，這是預發布版號的既有限制。
-version = "0.0.1a1"
-description = "promptex plugin 擴展範例（alpha）：在改寫遍為 skill 與 rule 追加一行"
+# 1.0.0 是正式版，PEP 440 與 semver 的寫法相同，三生態版號逐字一致。
+version = "1.0.0"
+description = "promptex plugin 擴展範例：在改寫遍為 skill 與 rule 追加一行"
 requires-python = ">=3.10"
 license = { text = "Apache-2.0" }
 readme = "README.md"
 authors = [{ name = "promptex-ai" }]
 keywords = ["promptex", "promptex-plugin", "prompt", "ai", "llm", "agent", "codegen"]
 classifiers = [
-  "Development Status :: 3 - Alpha",
+  "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
   "License :: OSI Approved :: Apache Software License",
   "Programming Language :: Python :: 3",

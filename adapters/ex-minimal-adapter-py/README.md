@@ -1,6 +1,6 @@
 # ex-minimal-adapter-py
 
-[ex-minimal-project-py](../../) 的 adapter 擴展。由專案以路徑來源（`[tool.uv.sources]` 的 editable path）掛上：Python 的 import 走發布名對應的 import 套件名，帶連字號的目錄無法直接 import；同時保持可發布形態——中繼欄位、參數宣告與授權都隨套件出貨，版號是 alpha 預發布版。
+[ex-minimal-project-py](../../) 的 adapter 擴展。由專案以路徑來源（`[tool.uv.sources]` 的 editable path）掛上：Python 的 import 走發布名對應的 import 套件名，帶連字號的目錄無法直接 import；同時保持可發布形態——中繼欄位、參數宣告與授權都隨套件出貨，版號是 1.0.0 正式版。
 
 適配以 SDK 層實作，只用 `AdapterContext` 的公開介面。`emit` 的責任鏈固定四步：
 
@@ -27,7 +27,7 @@ uvx twine check dist/*
 uvx twine upload dist/*
 ```
 
-版號寫 PEP 440 的 `0.0.1a1`，與另兩個生態的 `0.0.1-alpha.1` 指同一個版本——三生態版號無法逐字相同，這是預發布版號的既有限制。安裝端要**明指版本**：`pip install ex-minimal-adapter-py==0.0.1a1`（或 `uv pip install` 同樣寫法），**不要**用全域的 `--pre`／`--prerelease=allow`。理由：`--pre` 對整棵依賴樹放行預發布版，依賴的版本範圍內若有預發布版（例如 `promptex-py`），就會解到它而不是正式版；明指擴展版本時 pip 與 uv 只對該套件放行預發布，依賴仍照預設排除預發布、解到正式版。
+版號 `1.0.0` 是正式版，與 npm、crates.io 側逐字相同。安裝端照一般寫法即可：`pip install ex-minimal-adapter-py`（或 `uv pip install ex-minimal-adapter-py`），不需要 `--pre`。
 
 SDK 依賴是 `dependencies` 的 `promptex-py`，指向 registry 上正式發布的版本。發布驗證、消費端安裝與實際執行用的都是同一份 SDK。
 
