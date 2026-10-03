@@ -1,0 +1,85 @@
+# 發布入口：把一次發版的套件單元發布到 PyPI，alpha、beta、rc 與 GA 每個階段都發布。
+#
+# 發布的套件只有 plugins/ex-minimal-plugin-py 與 adapters/ex-minimal-adapter-py，兩者以
+# linked-versions 同版。PyPI 沒有 dist-tag：版號由建置工具正規化成 PEP 440（1.1.0-alpha.1 →
+# 1.1.0a1），pip 不加 --pre 不會安裝預發布版。建置前的判斷集中在 scripts/release/publish-units.sh：
+# 它依單元帶的檔案決定註冊中心，只收 manifest 列出的兩個路徑，逐單元核對版號屬於這個階段，
+# 已在 PyPI 的版號不放進上傳目錄。
+#
+# 由 release-please.yml 在單元 tag 建立後以 workflow_dispatch 派送，ref 是這次發版的單元 tag。
+# 入口必須是本檔，不能由其他 workflow 以 workflow_call 呼叫：PyPI 不支援以可重用 workflow 登記
+# Trusted Publisher。
+#
+# PyPI 走 Trusted Publishing（OIDC），不使用長期 token：短期憑證由 GitHub 的 OIDC 供應者於 job
+# 執行時簽發，倉庫端不持有任何可外洩的長期密鑰，因此本檔沒有任何 secrets 引用，只有 id-token
+# 權限。登記值為 owner promptex-ai、repo ex-minimal-project-py、workflow publish.yml，environment
+# 留空：本檔不宣告 environment。
+#
+# 本倉庫公開，所以上傳開啟 attestations：每個檔案附上 PEP 740 的來源證明，簽章憑證記錄來源倉庫
+# 與 workflow，寫進 Sigstore 的公開透明日誌。
+name: Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      paths:
+        description: '發版的套件路徑，JSON 陣列，例如 ["plugins/ex-minimal-plugin-py"]'
+        required: true
+        type: string
+      stage:
+        description: 發布分支所在的階段；每個單元的版號都必須屬於這個階段
+        required: true
+        type: choice
+        options: [alpha, beta, rc, ga]
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+# 同一個階段與同一組單元的重複派送排隊等候，不取消；已在 PyPI 的版號不會再上傳。
+concurrency:
+  group: publish-${{ inputs.stage }}-${{ inputs.paths }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish to PyPI
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      # OIDC 憑證簽發所需。
+      id-token: write
+      contents: read
+    steps:
+      # 本 job 持有 id-token: write，第三方與官方 action 一律釘 SHA。
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1  # 無移動式 v10 主版標籤，只能釘確切版號
+
+      # 上傳目錄放在工作區內：上傳的 action 跑在容器裡，只掛得到工作區。
+      # uv build 會下載各單元 pyproject.toml 的 build-system.requires 指定的建置後端（hatchling>=1.25），
+      # 版本由該範圍決定、不釘版；要固定時改 build-system 的範圍，不在本 job 另拆建置步驟。
+      - name: 建置 wheel 與 sdist
+        id: build
+        env:
+          PATHS: ${{ inputs.paths }}
+          STAGE: ${{ inputs.stage }}
+          PUBLISH_OUT: ${{ github.workspace }}/tmp/publish
+        run: |
+          mapfile -t paths < <(jq -r '.[]' <<<"$PATHS")
+          bash scripts/release/publish-units.sh "$STAGE" "${paths[@]}"
+
+      # 官方 action 直接消費 OIDC 憑證，不需要任何 token。
+      # skip-existing：重跑時已上傳的檔案跳過，不中止。
+      - name: 上傳到 PyPI
+        if: steps.build.outputs.count != '0'
+        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # release/v1 分支，2026-09-11 釘
+        with:
+          packages-dir: tmp/publish/pypi/
+          skip-existing: true
+          attestations: true

@@ -21,11 +21,7 @@
 
 ## 發布
 
-```bash
-uv build
-uvx twine check dist/*
-uvx twine upload dist/*
-```
+發布走專案的發布流程（Trusted Publishing），不在套件目錄手動發布，步驟見專案根 [README 的「發布」一節](../../README.md#發布)。
 
 版號 `1.0.0` 是正式版，與 npm、crates.io 側逐字相同。安裝端照一般寫法即可：`pip install ex-minimal-adapter-py`（或 `uv pip install ex-minimal-adapter-py`），不需要 `--pre`。
 

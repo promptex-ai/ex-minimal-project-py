@@ -217,6 +217,11 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
+# 發布腳本的暫存（稽核記錄、打包產物）。
+/tmp/
+# 上面 Python 範本的 lib/ 會連發布腳本的共用函式 scripts/lib/ 一起忽略，這裡放回。
+!scripts/lib/
+
 # === promptex init 產生的忽略規則（重跑以本行判定，勿改寫）===
 # 框架的建置快取。整個 .promptex/ 不忽略：查詢進入點的覆寫檔 .promptex/query
 # 是作者手寫的內容，要入版控；匯出的 .promptex/preview/ 入不入版控由你決定。

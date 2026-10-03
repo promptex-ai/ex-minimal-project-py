@@ -38,4 +38,6 @@ packages = ["src/ex_minimal_adapter_py"]
 # 開發樹本身就是 python-source，直譯器跑過留下的 __pycache__ 會被收進 wheel。
 # 那些 .pyc 綁死在建置機的 Python 版本上，對安裝端無用，卻讓 wheel 的內容
 # 清單隨「誰在哪台機器上建的」而變。
-exclude = ["**/__pycache__/**"]
+# .release-marker 是發布腳本只在發布分支上寫進套件目錄的標記檔，不屬於套件內容；
+# 不排除的話 sdist 會把它收進去。
+exclude = ["**/__pycache__/**", ".release-marker"]
