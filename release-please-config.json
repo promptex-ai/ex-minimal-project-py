@@ -47,5 +47,6 @@
       "component": "ex-minimal-adapter-py",
       "release-type": "python"
     }
-  }
+  },
+  "last-release-sha": "de57ebd30c8b31356c24d48d19d8eb0c2e511d6d"
 }
