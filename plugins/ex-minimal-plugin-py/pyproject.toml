@@ -1,7 +1,7 @@
 [project]
 name = "ex-minimal-plugin-py"
 # 1.0.0 是正式版，PEP 440 與 semver 的寫法相同，三生態版號逐字一致。
-version = "1.0.0"
+version = "1.1.0"
 description = "promptex plugin 擴展範例：在改寫遍為 skill 與 rule 追加一行"
 requires-python = ">=3.10"
 license = { text = "Apache-2.0" }

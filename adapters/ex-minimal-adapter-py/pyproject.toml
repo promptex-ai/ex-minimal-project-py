@@ -1,7 +1,7 @@
 [project]
 name = "ex-minimal-adapter-py"
 # 1.0.0 是正式版，PEP 440 與 semver 的寫法相同，三生態版號逐字一致。
-version = "1.0.0"
+version = "1.1.0"
 description = "promptex 第三方平台適配擴展範例：把同一份源碼投影成另一套平台原生產物"
 requires-python = ">=3.10"
 license = { text = "Apache-2.0" }
