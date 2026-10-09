@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/promptex-ai/ex-minimal-project-py/compare/ex-minimal-adapter-py/v1.0.0...ex-minimal-adapter-py/v1.1.0) (2026-10-09)
+
+
+### chore
+
+* **release/v1.1:** ex-minimal-adapter-py 1.1.0 ([6d1b0c8](https://github.com/promptex-ai/ex-minimal-project-py/commit/6d1b0c8ab3b1828d48c323d0e218ecf7a7f2c800))
+
 ## [1.0.0](https://github.com/promptex-ai/ex-minimal-project-py/compare/ex-minimal-adapter-py/v0.0.1-alpha.1...ex-minimal-adapter-py/v1.0.0) (2026-10-03)
 
 
