@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/promptex-ai/ex-minimal-project-py/compare/ex-minimal-plugin-py/v1.0.0...ex-minimal-plugin-py/v1.1.0) (2026-10-09)
+
+
+### chore
+
+* **release/v1.1:** ex-minimal-plugin-py 1.1.0 ([425eca5](https://github.com/promptex-ai/ex-minimal-project-py/commit/425eca550a78fdacac5084bda13725e762fbd113))
+
 ## [1.0.0](https://github.com/promptex-ai/ex-minimal-project-py/compare/ex-minimal-plugin-py/v0.0.1-alpha.1...ex-minimal-plugin-py/v1.0.0) (2026-10-03)
 
 
