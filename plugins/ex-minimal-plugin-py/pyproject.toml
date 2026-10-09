@@ -20,7 +20,7 @@ classifiers = [
   "Topic :: Software Development :: Build Tools",
   "Topic :: Software Development :: Code Generators",
 ]
-dependencies = ["promptex-py~=1.0.1"]
+dependencies = ["promptex-py~=1.1.0"]
 
 [project.urls]
 Homepage = "https://github.com/promptex-ai/ex-minimal-project-py"
