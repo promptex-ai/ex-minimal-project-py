@@ -1,0 +1,7 @@
+{
+  "product": { "name": "ex-minimal-project-py", "members": [] },
+  "units": {
+    "ex-minimal-plugin-py": { "kind": "package", "stages": ["alpha", "ga"] },
+    "ex-minimal-adapter-py": { "kind": "package", "stages": ["alpha", "ga"] }
+  }
+}
